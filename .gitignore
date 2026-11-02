@@ -1,0 +1,9 @@
+# resources dir is mostly repositories and shit I have cloned as reference
+# material about parallel parsing/compilation for this project
+# the ./fetch script is provided to reconstruct this directory on other machines
+# but copyright here, license there, git submodules there... (especially the submodules)
+# I ain't committing this directory to git, just run the fetch script
+
+# note: fetch script misses a couple documents that must be downloaded from a browser
+# (acm website has the PDFs behind a challenge and you need cookies and javascript to get past)
+resources/

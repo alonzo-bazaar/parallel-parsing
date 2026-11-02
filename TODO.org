@@ -1,0 +1,11 @@
+* TODO per 2 nov 2026
+oggi famo un po' di parallel
+- vedi meglio cujson
+- vedi meglio bqn
+- reimplementa bqn
+  - csv
+  - json
+
+come fattibile da gpu? (ad esempio xor scan per csv è cpu, come possiamo farlo da gpu?)
+inizia a buttare giu degli appunti (di reimplementatio, e di cujson)
+arriviamo a un principio di progetto presentabile al bertini

@@ -1,0 +1,5 @@
+ignoring what's included in the ~fetch~ script, as that kinda explains itself
+
+(thank you marshall)
+https://aplwiki.com/wiki/Parenthesis_nesting_level
+https://mlochbaum.github.io/BQN/implementation/codfns

@@ -1,0 +1,80 @@
+#!/usr/bin/env perl
+# I want the resource dir to be decently reproducible
+# not like nix levels reproducible, it's more that I wanna avoid
+# "wait where the fuck was this from" scenarios
+# ergo this script
+# 
+# it contains a whole bunch of links to resources I'm gonna use 
+# for this project so if I delete or forget something I can rerun
+# the script and it redownloads whatever it is that I needed
+# and it's less clunky than having a list of urls and having to
+# manyally go to each url and download that, clone that, check if 
+# I have have downloaded that...
+# 
+# usage: ./fetch
+
+use strict;
+use warnings;
+use File::Spec;
+
+sub dirname {
+    # see perldoc File::Spec
+    return (File::Spec->splitpath(File::Spec->rel2abs($_[0])))[1];
+}
+
+# setup
+# rest of the script should execute in the dirname($0)/resources/ directory
+my $resource_dir=File::Spec->catdir(dirname($0), 'resources');
+(-d $resource_dir) or mkdir($resource_dir);
+chdir $resource_dir;
+
+sub download_repo {
+    my ($d_name, $url) = @_;
+    system("git", "clone", "--depth", "1",
+           $url, $d_name);
+}
+sub download_file {
+    my ($f_name, $url) = @_;
+    system("curl",
+           "-L", $url,
+           "-o", $f_name);
+}
+
+my @repos=(
+    # includes array oriented json and csv parsers
+    ['bqn-libs', 'https://github.com/mlochbaum/bqn-libs'],
+    # gpu accelerated json parser
+    ['cuJSON',   'https://github.com/AutomataLab/cuJSON'],
+    # gpu accelerated compiler
+    ['Co-dfns',  'https://github.com/Co-dfns/Co-dfns/'  ],
+    # gpu accelerated compiler
+    ['pareas',    'https://github.com/Snektron/pareas'  ],
+);
+my @files=(
+    # array oriented markdown parser
+    ['md.bqn',      'https://raw.githubusercontent.com/mlochbaum/BQN/'.
+                    'refs/heads/master/md.bqn'],
+
+    # phd thesis of Aaron W. Hsu about array oriented vectorized tree manipulation
+    ['hsu-phd.pdf', 'https://scholarworks.iu.edu/dspace/bitstreams/'.
+                    'dcbd5240-8454-4533-bc0c-ac3ee7628b8e/download'],
+
+    # theses cited in the pareas repository as research for pareas
+    ['lexing-parse-anal.pdf', 'https://theses.liacs.nl/pdf/2020-2021-VoetterRobin.pdf'],
+    ['codegen.pdf',           'https://theses.liacs.nl/pdf/2020-2021-HuijbenMarcel.pdf'],
+
+    # acm doesn't let you use curl to download a pdf since you must solve a
+    # challenge to download a pdf from one of their links (motherfuckers)
+    # visit these two links from a browser to download
+    # https://dl.acm.org/doi/pdf/10.1145/3528416.3530249?download=true # gpu compilation paper
+    # https://dl.acm.org/doi/pdf/10.1145/3760250.3762222?download=true # cujson paper
+
+);
+foreach (@repos) {
+    my ($d_name, $url) = @{$_};
+    if(not -d $d_name) { download_repo($d_name, $url); }
+}
+foreach (@files) {
+    my ($f_name, $url) = @{$_};
+    if(not -f $f_name) { download_file($f_name, $url); }
+}

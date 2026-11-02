@@ -1,0 +1,84 @@
+wanna go from parenthesized string to parent vector representation
+
+first of all wanna take depth vector and some sort of token mask
+do I make the normalizing thing?
+where I like, compress all tokens into single elements of the array
+
+let's see how would that even work first
+
+* Do I wanna keep the parentheses?
+if I kept only the depth vector we would have a small problem
+condier the string ~((a b) (c d) (e f))~
+all symbols in there are at depth 2
+so the depth vector gives us no information how deep in are we actually
+
+could we keep just the open parentheses but not the closed ones?
+#+begin_quote
+*NOTE:* in the following examples whitespace are kept in the vector just for reading convenience
+so please note that in the vector intermediate representation I'm using only the tree nodes will appear in the vectors, any whitespace will be removed, as its only use in the syntax I'm going for is legibility and separating one symbol from the other, and both these uses will have run their course by the time we're wrangling trees
+#+end_quote
+
+something like
+- values :: ~((a b (c d (e f~
+- depth ::  ~123 3 23 3 23 3~
+
+this would indeed preserve all useful information about the tree, and not have to keep the closing parentheses
+it could also handle cases like
+since we're also keeping a type vector
+
+~((a b) x y (c d) z (e f) g h) w~
+
+- values :: ~((a b x y (c d z (e f g h w~
+- depth ::  ~123 3 2 2 23 3 2 23 3 2 2 1~
+- type ::   ~nns s s s ns s s ns s s s s~
+
+where type n is for node and type s is for symbol  
+
+* tree structure out of the parser
+riffing of the man, the myth, the legend himself, I'm going to return an inverted table [fn::apl speak for struct of arrays [fn::cs speak for, instead of having an array of length ~i~ with structs of ~n~ fields, having ~n~ arrays of length ~i~, one array per field of the struct[fn:: so for instance, instead of having ~typedef struct{int x, int y} point; point[10]~ you have ~int xs[10]; int ys[10]~, this is easier to vectorize when you have a lot of operations that only interest certain fields of the table]]] from the parser
+
+the inverted table will have the following columns
+- depth of the node
+- type of the node (we shall for now limit ourselves to composite and leaf/symbol)
+- value of the node (string that represents the node, this will be ~"("~ for composite nodes (since they start an open/closed paren) and the symbol string for symbols)
+
+** how do I represent types? 
+our current parser is probably like, a first pass in what should be an /actual/ parser for a scheme subset 
+
+we currently only have symbols and parentheses, this is unlikely to do
+some things we should add to the parser
+- [ ] literals ::
+  - [ ] string literals ::
+  - [ ] integer literals ::
+  - [ ] float literals ::
+- [ ] better "tree" node types :: our only branching construct rn is '('
+  we should ideally have, first of all, separate types for function calls
+  this will also likely involve separate types for lambdas, since we need to distinguish lambdas to distinguish "if a list begins with a lambda then it's a function call of this immediate mf"  
+
+  for the lexical neighbour shit we should also distinguish function definitions
+  or well... definitions in general I suppose
+
+  we might want to have a separate type for all special forms
+  special forms aside symbols, string literals, integer literals, and float literals, all should have separate types  
+
+  although... how would we handle macro calls?
+  perhaps it's best we have a separate type only for certain special forms 
+  and then have a separate "ok, some other form" type
+  idfk
+
+* from depth to parent vector  
+the first step in the compiler proper is turning this depth vector representation into a parent vector
+
+since we're not gonna alter the nodes' ordering in this step, we just gotta derive the parent vector from the depth vector we got 
+
+#+begin_src dyalog-apl
+⊃⌽⍸d[⍳i]=d[i]-1
+#+end_src
+first of reverse of where d[⍳i] is equal to d[i]-1
+
+in bqn it would become, brutally translated, ~⊢´/(i⊸↑=i⊸⊏) d~ 
+
+we could use this to compute the parent vector as
+
+the 0∾ at the beginning is for root self reference since
+0∾{⊢´/(𝕩⊸↑=(1-˜𝕩⊸⊏))d}¨ 1↓ ↕≠d
