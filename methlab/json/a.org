@@ -1,0 +1,9 @@
+blog post does not cover full json spec
+for full spec see the rfc
+https://www.rfc-editor.org/info/rfc8259/
+
+there's this article about nested lists
+useful for lisp as well later down the line
+https://saltysylvi.github.io/blog/parsing-nested-lists-in-bqn.html
+
+* nested lists (json blog post *and* article)

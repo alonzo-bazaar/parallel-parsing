@@ -1,0 +1,11 @@
+Now for parsing we're going to build the list from the bottom up again, using the same depth ordering ideas. We obviously can't operate only on the token types (the string the tokenizer produces); we need to incorporate the token values (the numbers) at some point.
+
+The way we'll do that is operating on the token types to produce indices that we use to select from a list of values.
+
+The way we'll be able to reference a whole sublist like ⟨3,4,⟨5,6⟩⟩ is by building from the bottom up, as previously mentioned, so that by the time we need to use a value, we've already built it.
+
+We start with the deepest list ⟨5,6⟩, which we can build by indexing into the list of values (which again at this point is just numbers). Then we append this to the list of values. Now in a future step where we need to build ⟨3,4,⟨5,6⟩⟩, all three elements of this list already reside in our list of values, and all we need to do is index into the list of values to assemble them into a new value that gets appended to the end.
+
+(the paragraph above is the reason why we do the vi bullshit)
+
+By taking a sum scan of a mask of opening bracket locations in the depth ordering we can give a number to each sublist of the list. This is the order we have to construct values in, with higher numbers going first.

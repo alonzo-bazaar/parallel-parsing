@@ -1,0 +1,31 @@
+hic est some utf8
+https://www.rfc-editor.org/info/rfc3629/#section-3
+
+- avec latin
+non è la rosa, non è il tulipano
+non è la rosa, non è il tulipano
+non è la rosa, non è il tulipano
+
+- avec taoteching
+https://en.wikisource.org/wiki/Translation:Tao_Te_Ching
+
+道可道，非恆道；
+名可名，非恆名。
+無名，天地之始；
+有名，萬物之母。
+故，
+恆無欲也，以觀其妙；
+恆有欲也，以觀其徼。
+此兩者同出而異名，
+同謂之玄。
+玄之又玄，眾妙之門。
+
+- avec iudaea
+https://www.sefaria.org/Bava_Metzia.59b.1?lang=bi&with=all&lang2=en
+
+וְזֶה הוּא תַּנּוּר שֶׁל עַכְנַאי. מַאי עַכְנַאי? אָמַר רַב יְהוּדָה אָמַר שְׁמוּאֵל: שֶׁהִקִּיפוּ[הוּ] דְּבָרִים כְּעַכְנָא זוֹ, וְטִמְּאוּהוּ. תָּנָא: בְּאוֹתוֹ הַיּוֹם הֵשִׁיב רַבִּי אֱלִיעֶזֶר כׇּל תְּשׁוּבוֹת שֶׁבָּעוֹלָם, וְלֹא קִיבְּלוּ הֵימֶנּוּ. 
+
+And this is known as the oven of akhnai. The Gemara asks: What is the relevance of akhnai, a snake, in this context? Rav Yehuda said that Shmuel said: It is characterized in that manner due to the fact that the Rabbis surrounded it with their statements like this snake, which often forms a coil when at rest, and deemed it impure. The Sages taught: On that day, when they discussed this matter, Rabbi Eliezer answered all possible answers in the world to support his opinion, but the Rabbis did not accept his explanations from him.
+
+https://design215.com/toolbox/utf8-4byte-characters.php
+🂡

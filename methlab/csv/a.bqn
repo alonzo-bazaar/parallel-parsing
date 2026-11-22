@@ -13,7 +13,7 @@
 # example input/output
 # in:  0 0 1 1 1 0 0 0 0 0 1 1 0 1
 # out: 0 0 0 1 2 0 0 0 0 0 0 1 0 0
-RM ← {𝕊m :
+RM ⇐ {𝕊m :
    s ← +`m   # plus Scan
    f ← m∧¬»m # mark First positive index in each run of consecutive 1s
 
@@ -37,7 +37,7 @@ RM ← {𝕊m :
 }
 
 # turns csv text into csv data structure
-CSV ← {𝕊t:
+CSV ⇐ {𝕊t:
     # quote indices
     q←'"'=t
     # comma and newline indices
